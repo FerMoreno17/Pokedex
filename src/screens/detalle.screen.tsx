@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { View, Text, StyleSheet, Pressable, Image, Dimensions } from 'react-native';
-import { RootStackParams } from '../navigation/navigator';
+import { RootStackParams } from '../navigation/stackNavigator';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FadeInImage } from '../components/fadeInImage.component';
@@ -9,7 +9,7 @@ import usePokemon from '../hooks/usePokemon';
 import Spinner from '../components/spinner.component';
 import PokemonDetails from '../components/pokemonDetails.component';
 
-interface DetalleScreenProps extends NativeStackScreenProps<RootStackParams, 'Detalle'> { };
+interface DetalleScreenProps extends NativeStackScreenProps<RootStackParams, 'Detalle'> { }
 
 export default function DetalleScreen({ navigation, route }: DetalleScreenProps) {
     const { color, item } = route.params;
@@ -61,7 +61,7 @@ export default function DetalleScreen({ navigation, route }: DetalleScreenProps)
         },
         containerBottom: {
             flex: 2,
-        }
+        },
     });
 
     function handleBack() {

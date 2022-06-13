@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { PokemonNameUrl, SimplePokemon } from '../interfaces/pokemonPageResponse.interface';
 import { getPokemonList } from '../service/pokemon.service';
 
-export default function usePagination() {
-    const nextPageUrl = useRef('https://pokeapi.co/api/v2/pokemon?limit=40');
-    const [simplePokemonList, setSimplePokemonList] = useState<SimplePokemon[]>([]);
+export default function usePokemonSearch() {
+    const nextPageUrl = useRef('https://pokeapi.co/api/v2/pokemon?limit=1200');
+    const [pokemonSearchList, setPokemonSearchList] = useState<SimplePokemon[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -15,11 +15,10 @@ export default function usePagination() {
     async function loadPage() {
         setLoading(true);
         const respuesta = await getPokemonList(nextPageUrl.current);
-        nextPageUrl.current = respuesta.data.next;
-        mapPokemonList(respuesta.data.results);
+        mapPokemonSearchList(respuesta.data.results);
     }
 
-    function mapPokemonList(pokemonList: PokemonNameUrl[]) {
+    function mapPokemonSearchList(pokemonList: PokemonNameUrl[]) {
         const temp_list: SimplePokemon[] = pokemonList.map(
             item => {
                 const urlParts = item.url.split('/');
@@ -33,9 +32,9 @@ export default function usePagination() {
             });
         //de esta forma se guarda el nuevo listado y
         //se suma al guardado anteriormente
-        setSimplePokemonList([...simplePokemonList, ...temp_list]);
+        setPokemonSearchList(temp_list);
         setLoading(false);
     }
 
-    return { simplePokemonList, loading, loadPage };
+    return { pokemonSearchList, loading };
 }

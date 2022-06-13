@@ -9,7 +9,7 @@ export type RootStackParams = {
   Detalle: { item: SimplePokemon, color: string }
 }
 
-export default function navigator() {
+export default function StackNavigator() {
   const Stack = createNativeStackNavigator<RootStackParams>();
 
   return (

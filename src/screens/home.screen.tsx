@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StyleSheet, FlatList, Text, Dimensions } from 'react-native';
+import { View, Image, StyleSheet, FlatList, Text, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import usePagination from '../hooks/usePagination';
 import { SimplePokemon } from '../interfaces/pokemonPageResponse.interface';
@@ -8,10 +8,12 @@ import Spinner from '../components/spinner.component';
 
 export default function HomeScreen() {
     const { top } = useSafeAreaInsets();
-    const { width, height } = Dimensions.get('screen');
     const { loading, simplePokemonList, loadPage } = usePagination();
 
     const styles = StyleSheet.create({
+        container: {
+            alignItems: 'center',
+        },
         image: {
             width: 300,
             height: 300,
@@ -25,8 +27,8 @@ export default function HomeScreen() {
             fontWeight: 'bold',
             color: '#000',
             top: top + 5,
-            marginLeft:15,
-            alignSelf:'flex-start',
+            marginLeft: 15,
+            alignSelf: 'flex-start',
         },
     });
 
@@ -34,14 +36,14 @@ export default function HomeScreen() {
         return <PokemonCard item={pokemon} />;
     }
 
-    if (loading) {
-        return (
-            <Spinner />
-        );
-    }
+    // if (loading) {
+    //     return (
+    //         <Spinner />
+    //     );
+    // }
 
     return (
-        <View style={{ alignItems: 'center' }}>
+        <View style={styles.container}>
             <Text style={styles.title}>Pokedex</Text>
             <Image
                 source={require('../assets/pokebola.png')}
@@ -54,6 +56,13 @@ export default function HomeScreen() {
                 onEndReached={loadPage}
                 onEndReachedThreshold={0.4}
                 numColumns={2}
+                ListFooterComponent={(
+                    <ActivityIndicator
+                        style={{ height: 150 }}
+                        size={20}
+                        color="red"
+                    />
+                )}
             />
         </View >
     );
